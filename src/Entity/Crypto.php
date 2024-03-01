@@ -32,8 +32,7 @@ class Crypto
     #[ORM\Column(type: Types::DECIMAL, precision: 20, scale: 2)]
     private ?string $priceBTC = null;
 
-    #[ORM\Column]
-    private ?int $quantity = null;
+    
 
    
 
@@ -149,22 +148,8 @@ class Crypto
         return number_format(mt_rand(50, 200) / 100, 2);
     }
 
-    public function getQuantity(): ?int
-    {
-        return $this->quantity;
-    }
-
-    public function setQuantity(int $quantity): static
-    {
-        $this->quantity = $quantity;
-
-        return $this;
-    }
-
-  
-  
-   
+    
    
 
   
-} 
+}
