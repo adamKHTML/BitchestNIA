@@ -1,0 +1,81 @@
+{# templates/wallet/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Wallets{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('build/tailwind.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/dashboard.css') }}">
+{% endblock %}
+
+{% block body %}
+    {% include 'header.html.twig' %}
+
+    <div class="container-fluid h-full gradient-bg">
+        <div class="flex h-full">
+            <div class="w-48 bg-gray-800 text-white">
+                <!-- Sidebar -->
+                <ul class="flex flex-col p-4">
+                    <li>
+                        <a href="/client/dashboard" class="text-white">Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="/profile" class="text-white">Profile</a>
+                    </li>
+                    <li>
+                        <a href="/wallet" class="text-white">Wallets</a>
+                    </li>
+                    <li>
+                        <a href="/pay" class="text-white">Buy </a>
+                    </li>
+                    <li>
+                        <a href="/sale" class="text-white">Sale</a>
+                    </li>
+                    <li>
+                        <a href="/transactions" class="text-white">Transactions</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="flex-1 p-4">
+                <!-- Contenu du portefeuille -->
+                <h1 class="text-2xl font-bold mb-4">Your Wallets</h1>
+                
+                <!-- Afficher la liste des portefeuilles de l'utilisateur -->
+                {% for wallet in wallets %}
+                    <div class="wallet p-4 mb-4 rounded shadow">
+                        <h2 class="text-xl font-bold">Compte de {{ app.user.lastName }} {{ app.user.firstName }}</h2>
+                        <h3 class="text-xl "> {{ wallet.name }}</h3>
+                        <p>Solde : {{ wallet.getSoldeEuro() }} €</p>
+                      
+                    </div>
+                {% endfor %}
+ <!-- Formulaire pour changer le nom du portefeuille -->
+ <div class="mt-8">
+    <form action="{{ path('app_wallet') }}" method="post" class="glassmorphism-form">
+        <div class="mb-4">
+            <label class="block text-white-700 text-sm font-bold mb-2" for="new_wallet_name">
+                New Wallet Name:
+            </label>
+            <input
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="new_wallet_name" name="new_wallet_name" type="text" placeholder="Enter new wallet name" required
+            >
+        </div>
+        <div class="flex items-center justify-between">
+            <button
+                class="bg-custom-blue font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                type="submit"
+            >
+                Update Wallet
+            </button>
+        </div>
+    </form>
+
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

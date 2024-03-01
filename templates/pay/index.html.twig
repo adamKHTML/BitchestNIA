@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pay Crypto{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('build/tailwind.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/dashboard.css') }}">
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    {% include 'header.html.twig' %}
+
+    <div class="container-fluid h-full gradient-bg">
+        <div class="flex h-full">
+            <div class="w-48 bg-gray-800">
+                <!-- Sidebar -->
+                <ul class="flex flex-col p-4">
+                    <li>
+                        <a href="/client/dashboard" class="text-white">Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="/profile" class="text-white">Profile</a>
+                    </li>
+                    <li>
+                        <a href="/wallet" class="text-white">Wallets</a>
+                    </li>
+                    <li>
+                        <a href="/pay" class="text-white">Buy </a>
+                    </li>
+                    <li>
+                        <a href="/sale" class="text-white">Sale</a>
+                    </li>
+                    <li>
+                        <a href="/transactions" class="text-white">Transactions</a>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="flex-1 p-4">
+             <!-- Tableau des cryptomonnaies -->
+<h1 class="text-2xl font-bold mb-4">Cryptocurrencies</h1>
+<table class="bg-gray-800 ">
+   
+        <thead>
+            <tr>
+                <th class="px-6 py-3 border-b-2 border-gray-600">Name</th>
+                <th class="px-6 py-3 border-b-2 border-gray-600">Price</th>
+                <th class="px-6 py-3 border-b-2 border-gray-600">BTC</th>
+                <th class="px-6 py-3 border-b-2 border-gray-600">Actual Value</th>
+            </tr>
+        </thead>
+   
+        <tbody>
+            {% for crypto in cryptos %}
+                <tr class="{{ loop.index is even ? 'bg-gray-700' : 'bg-gray-800' }}">
+                    <td class="px-6 py-4">{{ crypto.name }}</td>
+                    <td class="px-6 py-4">{{ crypto.price }} €</td>
+                    <td class="px-6 py-4">{{ crypto.priceBTC }}</td>
+                    <td class="px-6 py-4">{{ crypto.actualValue }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    
+</table>
+
+
+                <!-- Formulaire d'achat en bas de la page -->
+                <form method="post" action="{{ path('app_pay') }}" class="glassmorphism-form mt-4">
+                    <h3 class="text-2xl font-bold mb-4">Buy Crypto</h3>
+
+                    {# Ajoutez des champs pour la crypto-monnaie et le montant à acheter #}
+                    <label for="crypto">Crypto-monnaie</label>
+                    <select name="crypto" id="crypto" class="form-control" required>
+                        {% for crypto in cryptos %}
+                            <option value="{{ crypto.id }}">{{ crypto.name }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <label for="amount">Montant à acheter</label>
+                    <input type="number" name="amount" id="amount" class="form-control" required>
+
+                    <button class="btn btn-lg btn-primary" type="submit">
+                        Buy
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

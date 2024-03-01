@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('build/tailwind.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+{% endblock %}
+
+{% block body %}
+<header style="background-color: #38618C;" class=" py-4 px-6 flex items-center justify-between">
+        
+    <div>
+        <a href="/home">
+        <img src="{{ asset('images/logoBitchest.svg') }}" href="/home" alt="Bitchest Logo" class="w-12 h-12">
+   </a> 
+</div>
+
+
+    
+    <div class="link-btg">
+    <div class="flex items-center space-x-4">
+        
+        <a href="/login" class="text-white">Login</a>
+        <a href="/register" class="text-white">Register</a>
+    </div>
+    </div>
+    
+</header>
+    {% for flash_error in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+
+    <div class="background-form">
+    <form method="post" class="glassmorphism-form">
+        <h3>Register</h3>
+    {{ form_errors(registrationForm) }}
+   
+    {{ form_start(registrationForm) }}
+    {{ form_row(registrationForm.lastName) }}
+    {{ form_row(registrationForm.firstName) }}
+    {{ form_row(registrationForm.pseudo) }}
+        {{ form_row(registrationForm.email) }}
+        {{ form_row(registrationForm.plainPassword, {
+            label: 'Password'
+        }) }}
+        {{ form_row(registrationForm.agreeTerms) }}
+
+        <button type="submit" class="btn">Register</button>
+    {{ form_end(registrationForm) }}
+    </form>
+</div>
+{% endblock %}

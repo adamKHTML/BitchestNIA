@@ -1,0 +1,178 @@
+html {
+    height: max-content 100%;
+}
+
+body , h1, h2, h3, h4, h5, h6, p, ul, ol {
+    margin: 0; 
+    padding: 0;
+    overflow-x: hidden;
+    font-size: 1.150rem;
+}
+
+#bg-video {
+    position: fixed; /* Position fixe pour rester en arrière-plan lors du défilement */
+    top: 0;
+    left: 0;
+    width: 100vw; /* Prend toute la largeur de la vue */
+    height: 90vh; /* Prend la moitié de la hauteur de la vue */
+    object-fit: cover;
+    z-index: -1;
+}
+header, .container {
+    position: relative;
+    z-index: 1;
+}
+
+.container{
+    margin-left: 20%;
+    padding-top: 100px;
+    color : white;
+}
+.presentation {
+    background-color: white;
+    padding: 50px;
+    text-align: center;
+    margin-top: 40vh;
+}
+
+
+.presentation p {
+    color: black;
+    margin-bottom: 25px;
+}
+
+.bg-custom-blue {
+    background-color: #38618C;
+}
+
+.bg-custom-blue:hover {
+    background-color: #FF5964;
+}
+
+.text-white{
+ position: relative;
+  transition: color 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+
+}
+.w-12 {
+    width: 8rem;
+    height: 82px;
+}
+ .text-white:after {
+   
+    background-color: #FF5964;
+     transition: transform 0.25s ease-out;
+     content: '';
+     position: absolute;
+     width: 100%;
+     transform: scaleX(0);
+     height: 2px;
+     bottom: 0;
+     left: 0;
+    
+     transform-origin: bottom right;
+    
+}
+.text-white:hover {
+    color: #FF5964;
+}
+
+ .text-white:hover::after {
+
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+.background-form {
+    background-image: linear-gradient(to bottom, #111111, #322E44);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 142vh;
+    margin: 0;
+}
+.glassmorphism-form {
+    width: 400px;
+    background: rgba(255, 255, 255, 0.13);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.767);
+    box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+    padding: 50px 35px;
+    border-radius: 10px;
+    margin-top: 37px; 
+    color: #ffffff;
+    text-align: center;
+}
+
+.glassmorphism-form h3 {
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 42px;
+    margin-bottom: 30px;
+}
+
+.glassmorphism-form label {
+    display: block;
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.glassmorphism-form input {
+    display: block;
+    height: 40px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.07);
+    border-radius: 3px;
+    padding: 0 10px;
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 300;
+    color: #ffffff;
+    border: none;
+}
+.glassmorphism-form button {
+    margin-top: 30px;
+    width: 100%;
+    background-color:#35A7FF;
+    color: white;
+    padding: 15px 0;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+}
+
+.glassmorphism-form .alert {
+    color: #FF5964; /* Adjust the color as needed */
+    margin-top: 20px;
+}
+
+.wallet {
+    width: 400px;
+    background: rgba(255, 255, 255, 0.13);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.767);
+    box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+    padding: 50px 35px;
+    border-radius: 10px;
+    margin-top: 37px; 
+    color: #ffffff;
+    text-align: center;
+}
+.form-control{
+    color: black;
+}
+
+.wallet {
+   
+        background: linear-gradient(45deg, #ecc355 0%, #ecc355 50%, #ae8b34 50%, #ae8b34 100%);
+       
+       
+        border-radius: 0.25rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombre légère */
+
+}

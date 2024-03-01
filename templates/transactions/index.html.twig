@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Transactions{% endblock %}
+
+{% block stylesheets %}
+   
+    <link rel="stylesheet" href="{{ asset('build/tailwind.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/dashboard.css') }}">
+{% endblock %}
+
+{% block body %}
+   
+    {% include 'header.html.twig' %}
+
+    <div class="container-fluid h-full gradient-bg">
+        <div class="flex h-full">
+            <div class="w-48 bg-gray-800">
+                <!-- Sidebar -->
+                <ul class="flex flex-col p-4">
+                    <li>
+                        <a href="/client/dashboard" class="text-white">Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="/profile" class="text-white">Profile</a>
+                    </li>
+                    <li>
+                        <a href="/wallet" class="text-white">Wallets</a>
+                    </li>
+                    <li>
+                        <a href="/pay" class="text-white">Buy</a>
+                    </li>
+                    <li>
+                        <a href="/sale" class="text-white">Sale</a>
+                    </li>
+                    <li>
+                        <a href="/transactions" class="text-white">Transactions</a>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="flex-1 p-4">
+                <h1 class="text-2xl font-bold mb-4">Transactions</h1>
+                <table class="bg-gray-800">
+                    <thead>
+                        <tr>
+                            <th class="px-6 py-3 border-b-2 border-gray-600">Bought Crypto</th>
+                            <th class="px-6 py-3 border-b-2 border-gray-600">Wallet</th>
+                            <th class="px-6 py-3 border-b-2 border-gray-600">Date</th>
+                            <th class="px-6 py-3 border-b-2 border-gray-600">Transaction Type</th>
+                            <th class="px-6 py-3 border-b-2 border-gray-600">Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for transaction in transactions %}
+                            <tr class="{{ loop.index is even ? 'bg-gray-700' : 'bg-gray-800' }}">
+                                <td class="px-6 py-4">{{ transaction.crypto.name }}</td>
+                                <td class="px-6 py-4">{{ transaction.wallet.name }}</td>
+                                <td class="px-6 py-4">{{ transaction.date|date('Y-m-d H:i:s') }}</td>
+                                <td class="px-6 py-4">{{ transaction.type }}</td>
+                                <td class="px-6 py-4">{{ transaction.quantity }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

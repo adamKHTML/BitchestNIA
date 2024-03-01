@@ -1,0 +1,79 @@
+{# templates/profile/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('build/tailwind.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/dashboard.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid h-full gradient-bg">
+    <div class="flex h-full">
+        <div class="w-48 bg-gray-800">
+            <!-- Sidebar -->
+            <ul class="flex flex-col p-4">
+                <li>
+                    <a href="/client/dashboard" class="text-white">Dashboard</a>
+                </li>
+                <li>
+                    <a href="/profile" class="text-white">Profile</a>
+                </li>
+                <li>
+                    <a href="/wallet" class="text-white">Wallets</a>
+                </li>
+                <li>
+                    <a href="/pay" class="text-white">Buy </a>
+                </li>
+                <li>
+                    <a href="/sale" class="text-white">Sale</a>
+                </li>
+                <li>
+                    <a href="/transactions" class="text-white">Transactions</a>
+                </li>
+            </ul>
+        </div>
+        <div class="container">
+            <h1>Your Profile</h1>
+
+            {% if not is_edit_mode %}
+                {# Afficher les informations du profil en mode affichage #}
+                <p>First Name: {{ app.user.firstName }}</p>
+                <p>Last Name: {{ app.user.lastName }}</p>
+                <p>Pseudo: {{ app.user.pseudo }}</p>
+                <p>Email: {{ app.user.email }}</p>
+
+                <button onclick="toggleEdit()">Edit</button>
+            {% else %}
+            {# Afficher le formulaire d'édition en mode édition #}
+            <div id="profile-edit-form-container" class="form-container" >
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <input type="hidden" name="is_edit_mode" value="{{ is_edit_mode ? 'true' : 'false' }}">
+                <button type="submit">Save</button>
+                {{ form_end(form) }}
+                <button >Cancel</button>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    function toggleEdit() {
+        var x = document.getElementById("profile-edit-form-container");
+        if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+
+        
+    }
+</script>
+{% endblock %}
