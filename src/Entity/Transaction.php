@@ -20,8 +20,8 @@ class Transaction
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 20, scale: 2)]
-    private ?string $quantity = null;
+    #[ORM\Column]
+    private ?int $quantity = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $methode_paiement = null;
@@ -63,12 +63,12 @@ class Transaction
         return $this;
     }
 
-    public function getQuantity(): ?string
+    public function getQuantity(): ?int
     {
         return $this->quantity;
     }
 
-    public function setQuantity(string $quantity): static
+    public function setQuantity(int $quantity): static
     {
         $this->quantity = $quantity;
 
