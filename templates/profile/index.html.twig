@@ -6,11 +6,14 @@
 
 {% block stylesheets %}
     {{ parent() }}
+
     <link rel="stylesheet" href="{{ asset('build/tailwind.css') }}">
+    
     <link rel="stylesheet" href="{{ asset('styles/dashboard.css') }}">
 {% endblock %}
 
 {% block body %}
+{% include 'header.html.twig' %}
 <div class="container-fluid h-full gradient-bg">
     <div class="flex h-full">
         <div class="w-48 bg-gray-800">

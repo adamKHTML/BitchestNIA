@@ -121,6 +121,5 @@ class Wallet
         return $this;
     }
 
-   
-
+    
 }

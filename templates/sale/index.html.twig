@@ -1,20 +1,68 @@
+{# templates/sale/index.html.twig #}
+
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello SaleController!{% endblock %}
+{% block title %}Sell Crypto{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('build/tailwind.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/dashboard.css') }}">
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    {{ parent() }}
+    {% include 'header.html.twig' %}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <body style="height: max-content;">
+        <div class="container-fluid h-full gradient-bg">
+            <div class="flex h-full">
+                <div class="w-48 bg-gray-800">
+                    <!-- Sidebar -->
+                    <ul class="flex flex-col p-4">
+                        <li>
+                            <a href="/client/dashboard" class="text-white">Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="/profile" class="text-white">Profile</a>
+                        </li>
+                        <li>
+                            <a href="/wallet" class="text-white">Wallets</a>
+                        </li>
+                        <li>
+                            <a href="/pay" class="text-white">Buy</a>
+                        </li>
+                        <li>
+                            <a href="/sale" class="text-white">Sale</a>
+                        </li>
+                        <li>
+                            <a href="/transactions" class="text-white">Transactions</a>
+                        </li>
+                    </ul>
+                </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/Argen/Desktop/Bitchest-Projet/Project-Bitchest/src/Controller/SaleController.php</code></li>
-        <li>Your template at <code>C:/Users/Argen/Desktop/Bitchest-Projet/Project-Bitchest/templates/sale/index.html.twig</code></li>
-    </ul>
-</div>
+                <div class="flex-1 p-4">
+                    <!-- Formulaire de vente en bas de la page -->
+                    <form method="post" action="{{ path('app_sale') }}" class="glassmorphism-form mt-4">
+                        <h3 class="text-2xl font-bold mb-4">Sell Crypto</h3>
+
+                        {# Ajoutez des champs pour la crypto-monnaie et le montant à vendre #}
+                        <label for="crypto">Crypto-monnaie</label>
+                        <select name="crypto" id="crypto" class="form-control" required>
+                            {% for crypto in cryptos %}
+                                <option value="{{ crypto.id }}">{{ crypto.name }}    {{ crypto.price }} €</option>
+                            {% endfor %}
+                        </select>
+
+                        <label for="amount">Montant à vendre</label>
+                        <input type="number" name="amount" id="amount" class="form-control" required>
+
+                        <button class="btn btn-lg btn-primary" type="submit">
+                            Sell
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
 {% endblock %}
