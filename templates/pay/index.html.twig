@@ -7,10 +7,10 @@
     <link rel="stylesheet" href="{{ asset('styles/dashboard.css') }}">
 {% endblock %}
 
-{% block body %}
+{% block body  %}
     {{ parent() }}
     {% include 'header.html.twig' %}
-
+<body style="height: max-content;" >
     <div class="container-fluid h-full gradient-bg">
         <div class="flex h-full">
             <div class="w-48 bg-gray-800">
@@ -73,7 +73,7 @@
                     <label for="crypto">Crypto-monnaie</label>
                     <select name="crypto" id="crypto" class="form-control" required>
                         {% for crypto in cryptos %}
-                            <option value="{{ crypto.id }}">{{ crypto.name }}</option>
+                            <option value="{{ crypto.id }}">{{ crypto.name }}   {{ crypto.price }} €</option>
                         {% endfor %}
                     </select>
 
@@ -87,4 +87,5 @@
             </div>
         </div>
     </div>
+</body>
 {% endblock %}

@@ -49,9 +49,9 @@ class PayController extends AbstractController
             $wallet->setSoldeCryptos($wallet->getSoldeCryptos() + $amount);
             $entityManager->persist($wallet);
 
-            // Ne mettez pas à jour directement la quantité de la crypto ici
-            // Utilisez plutôt les transactions pour les mises à jour
-            // ...
+            // Ajouter une entrée dans la table crypto_wallet
+            $wallet->addCrypto($crypto);
+            $entityManager->persist($wallet);
 
             $entityManager->flush();
 

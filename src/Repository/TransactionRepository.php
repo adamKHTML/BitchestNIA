@@ -2,6 +2,8 @@
 
 namespace App\Repository;
 
+use App\Entity\Crypto;
+use App\Entity\User;
 use App\Entity\Transaction;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -21,28 +23,23 @@ class TransactionRepository extends ServiceEntityRepository
         parent::__construct($registry, Transaction::class);
     }
 
-//    /**
-//     * @return Transaction[] Returns an array of Transaction objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('t.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Transaction
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    /**
+     * Récupère toutes les transactions liées à une crypto donnée pour un utilisateur donné.
+     *
+     * @param User $user L'utilisateur concerné
+     * @param Crypto $crypto La crypto concernée
+     *
+     * @return Transaction[] Un tableau d'objets Transaction
+     */
+    public function findAllTransactionsForCrypto(User $user, Crypto $crypto): array
+    {
+        return $this->createQueryBuilder('t')
+        ->join('t.wallet', 'w') // Assurez-vous que le nom de la relation est correct
+        ->andWhere('w.user = :user') // Utilisez la relation depuis Wallet vers User
+        ->andWhere('t.crypto = :cryptoId')
+        ->setParameter('user', $user)
+        ->setParameter('cryptoId', $crypto->getId())
+        ->getQuery()
+        ->getResult();
+    }
 }
