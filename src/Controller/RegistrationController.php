@@ -55,7 +55,10 @@ class RegistrationController extends AbstractController
 
            
  
-            // generate a signed url and email it to the user
+
+           
+ 
+            // generate a signed url anuser
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
                     ->from(new Address('Argentikk@gmail.com', 'Argentik'))
