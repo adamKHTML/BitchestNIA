@@ -19,10 +19,9 @@ class LoginController extends AbstractController
             // last username entered by the user
             $lastUsername = $authenticationUtils->getLastUsername();
     
-            // If the user is already logged in, redirect based on their role
             if ($this->getUser()) {
                 $roles = array_map('strtoupper', $this->getUser()->getRoles());
-    
+            
                 if (in_array('ROLE_ADMIN', $roles)) {
                     return $this->redirectToRoute('app_admin_dashboard');
                 } elseif (in_array('ROLE_USER', $roles)) {

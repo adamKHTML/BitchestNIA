@@ -1,3 +1,4 @@
+{# templates/user_management/index.html.twig #}
 {% extends 'base.html.twig' %}
 
 {% block title %}Admin Dashboard{% endblock %}
@@ -24,7 +25,7 @@
                         <a href="/profile" class="text-white">Profile</a>
                     </li>
                     <li>
-                        <a href="/#" class="text-white">User Management</a>
+                        <a href="{{ path('app_user_management') }}" class="text-white">User Management</a>
                     </li>
                     <li>
                         <a href="/#" class="text-white">Cryptocurrency Management</a>
@@ -39,28 +40,32 @@
             </div>
             <div class="flex-1 p-4">
 
-<h1 class="text-2xl font-bold mb-4">Cryptocurrencies</h1>
-<table class="bg-gray-800 ">
-   
-        <thead>
-            <tr>
-                <th class="px-6 py-3 border-b-2 border-gray-600">Name</th>
-                <th class="px-6 py-3 border-b-2 border-gray-600">Price</th>
-                <th class="px-6 py-3 border-b-2 border-gray-600">BTC</th>
-                <th class="px-6 py-3 border-b-2 border-gray-600">Actual Value</th>
-            </tr>
-        </thead>
-   
-        <tbody>
-            {% for crypto in cryptos %}
-                <tr class="{{ loop.index is even ? 'bg-gray-700' : 'bg-gray-800' }}">
-                    <td class="px-6 py-4">{{ crypto.name }}</td>
-                    <td class="px-6 py-4">{{ crypto.price }} €</td>
-                    <td class="px-6 py-4">{{ crypto.priceBTC }}</td>
-                    <td class="px-6 py-4">{{ crypto.actualValue }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    
-</table>
+                <h1 class="text-2xl font-bold mb-4">User Management</h1>
+                <table class="bg-gray-800">
+                    <thead>
+                        <tr>
+                            <th class="px-6 py-3 border-b-2 border-gray-600">Pseudo</th>
+                            <th class="px-6 py-3 border-b-2 border-gray-600">First Name</th>
+                            <th class="px-6 py-3 border-b-2 border-gray-600">Last Name</th>
+                            <th class="px-6 py-3 border-b-2 border-gray-600">Status</th>
+                            <th class="px-6 py-3 border-b-2 border-gray-600">Roles</th>
+                            <th class="px-6 py-3 border-b-2 border-gray-600">Is Verified</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                            <tr class="{{ loop.index is even ? 'bg-gray-700' : 'bg-gray-800' }}">
+                                <td class="px-6 py-4">{{ user.pseudo }}</td>
+                                <td class="px-6 py-4">{{ user.firstName }}</td>
+                                <td class="px-6 py-4">{{ user.lastName }}</td>
+                                <td class="px-6 py-4">{{ user.status }}</td>
+                                <td class="px-6 py-4">{{ user.roles | join(', ') }}</td>
+                                <td class="px-6 py-4">{{ user.isVerified ? 'Yes' : 'No' }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 {% endblock %}
