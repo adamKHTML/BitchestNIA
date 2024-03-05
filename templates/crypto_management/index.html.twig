@@ -34,7 +34,7 @@
                         <a href="/admin/all_transactions" class="text-white">Transactions</a>
                     </li>
                     <li>
-                        <a href="/#" class="text-white">Reports and Analytics</a>
+                        <a href="/admin/analytics-stats" class="text-white">Reports and Analytics</a>
                     </li>
                 </ul>
             </div>
@@ -48,7 +48,7 @@
                             <th class="px-6 py-3 border-b-2 border-gray-600">Price</th>
                             <th class="px-6 py-3 border-b-2 border-gray-600">Price BTC</th>
                             <th class="px-6 py-3 border-b-2 border-gray-600">Actual Value</th>
-                            <th class="px-6 py-3 border-b-2 border-gray-600">Actions</th>
+                            
                             
                         </tr>
                     </thead>
@@ -59,7 +59,7 @@
                                 <td class="px-6 py-4">{{ crypto.price }} €</td>
                                 <td class="px-6 py-4">{{ crypto.priceBTC }}</td>
                                 <td class="px-6 py-4">{{ crypto.actualValue }}</td>
-                                <td class="px-6 py-4"></td>
+                                
                             </tr>
                         {% endfor %}
                     </tbody>

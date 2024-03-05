@@ -6,17 +6,25 @@
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('build/tailwind.css') }}">
     <link rel="stylesheet" href="{{ asset('styles/dashboard.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .chart-container {
+            display: inline-block;
+            width: 48%;
+            margin: 5px;
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
     {{ parent() }}
     {% include 'header.html.twig' %}
-
+    <body style="height: max-content;" >
     <div class="container-fluid h-full gradient-bg">
         <div class="flex h-full">
-            <div class="w-48 bg-gray-800 text-white">
+            <div class="w-48 bg-gray-800 text-white" >
                 <!-- Sidebar -->
-                <ul class="flex flex-col p-4">
+                <ul class="flex flex-col p-4"  >
                     <li>
                         <a href="/admin/dashboard" class="text-white">Dashboard</a>
                     </li>
@@ -33,150 +41,62 @@
                         <a href="/admin/all_transactions" class="text-white">Transactions</a>
                     </li>
                     <li>
-                        <a href="/#" class="text-white">Reports and Analytics</a>
+                        <a href="/admin/analytics-stats" class="text-white">Reports and Analytics</a>
                     </li>
                 </ul>
             </div>
-            <div class="flex-1 p-4">
+            
+            <div class="flex-1 p-4" style="margin-left: 48px;">
                 <!-- Main Content -->
                 <div class="mb-4">
                     <h2 class="text-2xl font-bold">Welcome, Admin {{ app.user.pseudo }}</h2>
                 </div>
 
-
-
-                <!-- Adding the div for the chart -->
-                <div class="crypto-chart-container" style="width: 800px; height: 400px;">
-                    <div id="selectedCryptoInfo"></div>
-                    <canvas id="cryptoChart" width="600" height="300"></canvas>
+                <!-- Ajoutez le conteneur du graphique -->
+                <div>
+                    {% for cryptoName, cryptoData in cryptoData %}
+                        <div class="chart-container">
+                            <canvas id="cryptoChart_{{ cryptoName }}"></canvas>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
     </div>
-  
-
-{% endblock %}
-{% block javascripts %}
-<p class="text-2xl font-bold">Random Crypto variations</p>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var cryptoLabels = ['Bitcoin', 'Ethereum', 'Ripple', 'Bitcoin Cash', 'Cardano', 'Litecoin', 'NEM', 'Stellar', 'IOTA'];
-        var cryptoDataSets = [];
-
-        cryptoLabels.forEach(function (crypto) {
-            var cryptoValues = Array.from({ length: 10 }, () => Math.random() * (60 - (-60)) - 60);
-            cryptoDataSets.push({
-                label: crypto,
-                data: cryptoValues,
-                borderColor: getRandomColor(),
-                borderWidth: 2,
-                fill: false
-            });
-        });
-
-        var ctx = document.getElementById('cryptoChart').getContext('2d');
-        var cryptoChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: Array.from({ length: 10 }, (_, i) => randomDate()),
-                datasets: cryptoDataSets
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                scales: {
-                    y: {
-                        beginAtZero: false,
-                        ticks: {
-                            callback: function (value) {
-                                return value.toFixed(2) + '%';
-                            }
-                        },
-                        min: -60,
-                        max: 60
-                    },
-                    x: {
-                        display: true,
-                        ticks: {
-                            maxTicksLimit: 5
-                        }
-                    }
+    </body>
+    <script>
+        {% for cryptoName, cryptoData in cryptoData %}
+            generateChart('{{ cryptoName }}', {{ cryptoData|json_encode|raw }});
+        {% endfor %}
+    
+        function generateChart(cryptoName, cryptoData) {
+            const ctx = document.getElementById(`cryptoChart_${cryptoName}`).getContext('2d');
+    
+            const myLineChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: cryptoData.labels,
+                    datasets: [{
+                        label: cryptoName,
+                        data: cryptoData.data,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 2,
+                        fill: false
+                    }]
                 },
-                plugins: {
-                    legend: {
-                        position: 'top',
-                        onClick: function (event, legendItem) {
-                            var selectedIndex = legendItem.datasetIndex;
-                            var selectedCrypto = cryptoLabels[selectedIndex];
-                            var selectedCryptoInfo = document.getElementById('selectedCryptoInfo');
-                            var selectedCryptoData = getCryptoData(selectedCrypto, cryptoChart);
-                            var color = selectedCryptoData.percentageVariation >= 0 ? '#01FF19' : '#FF5964';
-
-                            selectedCryptoInfo.innerHTML = `
-                                <h3>${selectedCrypto}</h3>
-                                <p class="price-info">Price in Euro: ${selectedCryptoData.priceEuro} €</p>
-                                <p class="price-info">Price in BTC: ${selectedCryptoData.priceBTC} BTC</p>
-                                <p class="percentage-info" style="color: ${color}">Variation: ${selectedCryptoData.percentageVariation}%</p>
-                            `;
-
-                            // Toggle the 'active' class on selectedCryptoInfo
-                            selectedCryptoInfo.classList.toggle('active');
-                        },
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function (context) {
-                                var label = context.dataset.label || '';
-                                if (label) {
-                                    label += ': ';
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            ticks: {
+                                callback: function (value, index, values) {
+                                    return value + ' €';
                                 }
-                                label += parseFloat(context.parsed.y).toFixed(2) + '%';
-                                label += ' (' + context.parsed.x + ')';
-                                return label;
                             }
                         }
                     }
                 }
-            }
-        });
-
-        function getRandomColor() {
-            var letters = '0123456789ABCDEF';
-            var color = '#';
-            for (var i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
-        }
-
-        function randomDate() {
-            var start = new Date(2022, 0, 1);
-            var end = new Date();
-            var randomDate = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-            return randomDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
-        }
-
-        function getCryptoData(crypto, chart) {
-            var datasetIndex = chart.data.datasets.findIndex(function (dataset) {
-                return dataset.label === crypto;
             });
-
-            var dataPoints = chart.data.datasets[datasetIndex].data;
-            var lastDataPoint = dataPoints[dataPoints.length - 1];
-
-            return {
-                priceEuro: getRandomPrice(),
-                priceBTC: getRandomPrice(),
-                percentageVariation: lastDataPoint
-            };
         }
-
-        function getRandomPrice() {
-            return (Math.random() * 1000).toFixed(2);
-        }
-    });
-</script>
-
-
+    </script>
 {% endblock %}

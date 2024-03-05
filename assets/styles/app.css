@@ -235,3 +235,12 @@ header, .container {
     transform: scale(1.1); 
     background-color:  #85b4e7;
 }
+.chart-container {
+    height: 500px;
+    width: 500px; 
+    overflow: auto; 
+}
+
+.flex-col {
+    margin-bottom: auto;
+}
