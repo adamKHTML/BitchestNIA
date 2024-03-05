@@ -178,3 +178,60 @@ header, .container {
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombre légère */
 
 }
+
+.table-rounded {
+    
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid white; 
+}
+
+.table-rounded th {
+    padding: 10px; 
+    text-align: left;
+    border-bottom: 1px solid #555; 
+}
+
+.table-rounded td {
+   
+    overflow: hidden;
+    border: 1px  white;
+}
+
+.delete-button {
+  background-color: #FF5964;
+  color: white;
+}
+
+.edit-button {
+    background-color:#35A7FF;
+    color: white;
+  }
+
+  .status-button {
+    background-color:  #01FF19;
+    color: white;
+  }
+
+  .roles-button {
+    background-color:  #38618C;
+    color: white;
+  }
+
+  .delete-button:hover {
+    transform: scale(1.1); 
+    background-color: #ff313f;
+}
+
+.edit-button:hover {
+    transform: scale(1.1); 
+    background-color:#0065b1;
+}
+.status-button:hover {
+    background-color:  #03720e;
+    color: white;
+  }
+.roles-button:hover {
+    transform: scale(1.1); 
+    background-color:  #85b4e7;
+}

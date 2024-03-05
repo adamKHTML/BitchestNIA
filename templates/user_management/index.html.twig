@@ -25,13 +25,13 @@
                         <a href="/profile" class="text-white">Profile</a>
                     </li>
                     <li>
-                        <a href="{{ path('app_user_management') }}" class="text-white">User Management</a>
+                        <a href="/admin/user-management" class="text-white">User Management</a>
                     </li>
                     <li>
-                        <a href="/#" class="text-white">Cryptocurrency Management</a>
+                        <a href="/crypto/management" class="text-white">Cryptocurrency Management</a>
                     </li>
                     <li>
-                        <a href="/#" class="text-white">Transactions</a>
+                        <a href="/admin/all_transactions" class="text-white">Transactions</a>
                     </li>
                     <li>
                         <a href="/#" class="text-white">Reports and Analytics</a>
@@ -41,7 +41,7 @@
             <div class="flex-1 p-4">
 
                 <h1 class="text-2xl font-bold mb-4">User Management</h1>
-                <table class="bg-gray-800">
+                <table class="table-rounded bg-gray-800">
                     <thead>
                         <tr>
                             <th class="px-6 py-3 border-b-2 border-gray-600">Pseudo</th>
@@ -50,6 +50,7 @@
                             <th class="px-6 py-3 border-b-2 border-gray-600">Status</th>
                             <th class="px-6 py-3 border-b-2 border-gray-600">Roles</th>
                             <th class="px-6 py-3 border-b-2 border-gray-600">Is Verified</th>
+                            <th class="px-6 py-3 border-b-2 border-gray-600">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -61,6 +62,26 @@
                                 <td class="px-6 py-4">{{ user.status }}</td>
                                 <td class="px-6 py-4">{{ user.roles | join(', ') }}</td>
                                 <td class="px-6 py-4">{{ user.isVerified ? 'Yes' : 'No' }}</td>
+                                <td class="px-6 py-4">
+                                    <form action="{{ path('app_user_delete', {'id': user.id}) }}" method="post" class="inline">
+                                        <button type="submit" class="delete-button font-bold py-2 px-4 rounded">
+                                            Delete
+                                        </button>
+                                    </form>
+                                    <button  class="edit-button  font-bold py-2 px-4 rounded ml-2">
+                                        Edit
+                                    </button>
+                                    <form action="{{ path('app_user_change_status', {'id': user.id}) }}" method="post" class="inline">
+                                        <button type="submit" class="status-button font-bold py-2 px-4 rounded ml-2">
+                                            Change Status
+                                        </button>
+                                    </form>
+                                    <form action="{{ path('app_user_change_roles', {'id': user.id}) }}" method="post" class="inline">
+                                        <button type="submit" class="roles-button font-bold py-2 px-4 rounded ml-2">
+                                            Change Roles
+                                        </button>
+                                    </form>
+                                </td>
                             </tr>
                         {% endfor %}
                     </tbody>

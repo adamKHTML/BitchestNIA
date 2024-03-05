@@ -1,0 +1,71 @@
+{# templates/crypto_management/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('build/tailwind.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/dashboard.css') }}">
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    {% include 'header.html.twig' %}
+    <body style="height: max-content;" >
+    <div class="container-fluid h-full gradient-bg">
+        <div class="flex h-full">
+            <div class="w-48 bg-gray-800 text-white">
+                <!-- Sidebar -->
+                <ul class="flex flex-col p-4">
+                    <li>
+                        <a href="/admin/dashboard" class="text-white">Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="/profile" class="text-white">Profile</a>
+                    </li>
+                    <li>
+                        <a href="/admin/user-management" class="text-white">User Management</a>
+                    </li>
+                    <li>
+                        <a href="/crypto/management" class="text-white">Cryptocurrency Management</a>
+                    </li>
+                    <li>
+                        <a href="/admin/all_transactions" class="text-white">Transactions</a>
+                    </li>
+                    <li>
+                        <a href="/#" class="text-white">Reports and Analytics</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="flex-1 p-4">
+
+                <h1 class="text-2xl font-bold mb-4">Crypto Management</h1>
+                <table class="table-rounded bg-gray-800">
+                    <thead>
+                        <tr>
+                            <th class="px-6 py-3 border-b-2 border-gray-600">Name</th>
+                            <th class="px-6 py-3 border-b-2 border-gray-600">Price</th>
+                            <th class="px-6 py-3 border-b-2 border-gray-600">Price BTC</th>
+                            <th class="px-6 py-3 border-b-2 border-gray-600">Actual Value</th>
+                            <th class="px-6 py-3 border-b-2 border-gray-600">Actions</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for crypto in cryptos %}
+                            <tr class="{{ loop.index is even ? 'bg-gray-700' : 'bg-gray-800' }}">
+                                <td class="px-6 py-4">{{ crypto.name }}</td>
+                                <td class="px-6 py-4">{{ crypto.price }} €</td>
+                                <td class="px-6 py-4">{{ crypto.priceBTC }}</td>
+                                <td class="px-6 py-4">{{ crypto.actualValue }}</td>
+                                <td class="px-6 py-4"></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </body>
+{% endblock %}
