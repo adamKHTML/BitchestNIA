@@ -46,17 +46,32 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
-    {
-        $targetPath = $this->getTargetPath($request->getSession(), $firewallName);
+{
+    // Récupérer l'utilisateur authentifié
+    $user = $token->getUser();
 
-        if (!$targetPath) {
-            // Rediriger vers la page par défaut après la connexion
-            return new RedirectResponse($this->urlGenerator->generate('app_client_dashboard'));
+   
+    if (method_exists($user, 'getRoles')) {
+        $roles = $user->getRoles();
+    
+        // Vérifiez si les rôles sont disponibles et redirigez en conséquence
+        if ($roles && is_array($roles)) {
+            if (in_array('ROLE_ADMIN', $roles, true)) {
+                return new RedirectResponse($this->urlGenerator->generate('app_admin_dashboard'));
+            } elseif (in_array('ROLE_USER', $roles, true)) {
+                return new RedirectResponse($this->urlGenerator->generate('app_client_dashboard'));
+            }
         }
-
-        return new RedirectResponse($targetPath);
     }
 
+   
+
+
+  
+
+    // Si aucun rôle ni target path n'est disponible, rediriger vers la page d'accueil par défaut
+    return new RedirectResponse($this->urlGenerator->generate('app_home'));
+}
     protected function getLoginUrl(Request $request): string
     {
         return $this->urlGenerator->generate(self::LOGIN_ROUTE);

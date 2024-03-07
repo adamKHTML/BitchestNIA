@@ -129,6 +129,7 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     
     public function getRoles(): array
     {
+        
         // Convertir la chaîne de rôles en tableau si nécessaire
         return $this->roles ? explode(',', $this->roles) : [];
     }
