@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class AdminDashboardController extends AbstractController
 {
-    #[Route('/admin/dashboard', name: 'admin_dashboard')]
+    #[Route('/admin/dashboard', name: 'app_admin_dashboard')]
     public function index(EntityManagerInterface $entityManager, ChartService $chartService): Response
     {
         $cryptoRepository = $entityManager->getRepository(Crypto::class);
