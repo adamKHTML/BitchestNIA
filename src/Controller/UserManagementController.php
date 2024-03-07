@@ -87,7 +87,7 @@ class UserManagementController extends AbstractController
     public function changeUserStatus(User $user): Response
     {
         // Logique pour changer le statut de l'utilisateur (basculer entre 'actif' et 'banni', par exemple)
-        $newStatus = ($user->getStatus() === 'actif') ? 'banni' : 'actif';
+        $newStatus = ($user->getStatus() === 'active') ? 'banned' : 'active';
         $user->setStatus($newStatus);
         $this->entityManager->flush();
 
