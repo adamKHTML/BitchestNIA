@@ -1,0 +1,11 @@
+Transaction text for App\Entity\Wallet with ID 8
+Transaction text for User with ID 9
+Transaction text for App\Entity\Wallet with ID 8
+Date: 2024-03-03 20:20:06, Type: buy, Quantity: 11
+Date: 2024-03-03 20:22:47, Type: sell, Quantity: 10
+Date: 2024-03-03 20:22:55, Type: sell, Quantity: 1
+
+Date: 2024-03-03 20:20:06, Type: buy, Quantity: 11
+Date: 2024-03-03 20:22:47, Type: sell, Quantity: 10
+Date: 2024-03-03 20:22:55, Type: sell, Quantity: 1
+

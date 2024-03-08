@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Crypto;
 use App\Repository\CryptoRepository;
+use App\Service\ChartService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,7 +13,7 @@ use Doctrine\ORM\EntityManagerInterface;
 class ClientDashboardController extends AbstractController
 {
     #[Route('/client/dashboard', name: 'app_client_dashboard')]
-    public function index(CryptoRepository $cryptoRepository): Response
+    public function index(CryptoRepository $cryptoRepository, ChartService $chartService): Response
     {
         $user = $this->getUser();
         $wallets = $user->getWallets();
@@ -24,92 +25,37 @@ class ClientDashboardController extends AbstractController
 
         $cryptos = $cryptoRepository->findAll();
 
+        // Génération des données pour le graphique
+        $cryptoDataSets = [];
+        foreach ($cryptos as $crypto) {
+            // Générer les données pour les 6 premiers jours
+            $randomData = $this->generateRandomData(6);
+
+            // Ajouter le prix réel de la crypto pour le 7ème jour
+            $realPrice = $crypto->getPrice(); // Récupérer le prix réel depuis la base de données
+
+            $cryptoDataSets[$crypto->getName()] = [
+                'labels' => ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
+                'data' => array_merge($randomData, [$realPrice]),
+            ];
+        }
+
         return $this->render('client_dashboard/index.html.twig', [
             'controller_name' => 'ClientDashboardController',
             'soldeEuro' => $soldeEuro,
             'cryptos' => $cryptos,
+            'cryptoData' => $cryptoDataSets,
         ]);
     }
 
-
-    #[Route('/client/dashboard', name: 'client_dashboard')]
-    public function dashboard(CryptoRepository $cryptoRepository, EntityManagerInterface $entityManager): JsonResponse
+    private function generateRandomData($days): array
     {
-        $cryptos = $cryptoRepository->findAll();
-    
-        foreach ($cryptos as $crypto) {
-            // Vérifiez si les valeurs ont déjà été générées
-            if ($crypto->getPrice() === null) {
-                // Génération aléatoire des valeurs pour price, priceBTC et actualValue
-                $randomPrice = mt_rand(50, 150); // Valeur aléatoire entre 50 et 150
-                $randomPriceBTC = $randomPrice / mt_rand(1000, 1500); // Conversion arbitraire en BTC
-                $randomActualValue = mt_rand(80, 120); // Valeur aléatoire entre 80 et 120
-    
-                // Mettez à jour les propriétés dans l'entité Crypto
-                $crypto->setPrice($randomPrice);
-                $crypto->setPriceBTC($randomPriceBTC);
-                $crypto->setActualValue($randomActualValue);
-    
-                // Enregistrez les modifications dans la base de données
-                $entityManager->persist($crypto);
-                $entityManager->flush();
-            }
-        }
-    
-        $cryptoDataSets = [];
-        foreach ($cryptos as $crypto) {
-            $cryptoValues = $this->generateCryptoValues($crypto);
-            $cryptoDataSets[] = [
-                'id' => $crypto->getId(),
-                'name' => $crypto->getName(),
-                'actual_value' => $crypto->getActualValue(),
-                'price' => $crypto->getPrice(),
-                'price_btc' => $crypto->getPriceBTC(),
-                'cryptoValues' => $cryptoValues,
-            ];
-        }
-    
-        // Utilisez JsonResponse pour envoyer les données en tant que JSON
-        return new JsonResponse(['cryptos' => $cryptoDataSets]);
-    }
-    private function generateCryptoValues(Crypto $crypto): array
-    {
-        $session = $this->get('session');
-
-        // Utilisez une clé unique pour chaque crypto-monnaie
-        $sessionKey = 'crypto_values_' . $crypto->getId();
-
-        // Vérifiez si les valeurs ont déjà été générées
-        if ($session->has($sessionKey)) {
-            return $session->get($sessionKey);
+        $randomData = [];
+        for ($i = 0; $i < $days; $i++) {
+            // Générez des données aléatoires pour les 6 premiers jours
+            $randomData[] = mt_rand(10, 50); // Modifiez cette logique selon vos besoins
         }
 
-        // Si les valeurs n'ont pas encore été générées, générez-les
-        $cotations = $crypto->getCotations();
-        usort($cotations, function ($a, $b) {
-            return $a->getDate() <=> $b->getDate();
-        });
-
-        $cryptoValues = [];
-        $currentValue = $crypto->getActualValue();
-
-        foreach ($cotations as $cotation) {
-            // Mettez à jour l'actual_value de la crypto
-            $currentValue = $cotation->getActualValue();
-            $cryptoValues[] = [
-                'x' => $cotation->getDate()->getTimestamp() * 1000,
-                'y' => $currentValue,
-            ];
-        }
-
-        // Enregistrez les valeurs dans la session
-        $session->set($sessionKey, $cryptoValues);
-
-        return $cryptoValues;
-    }
-
-    private function getRandomColor(): string
-    {
-        return '#' . substr(md5(rand()), 0, 6);
+        return $randomData;
     }
 }

@@ -45,7 +45,7 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
    
-    #[ORM\OneToMany(targetEntity: Wallet::class, mappedBy: 'user')]
+    #[ORM\OneToMany(targetEntity: Wallet::class, mappedBy: 'user' , cascade: ['persist', 'remove'])]
     private Collection $wallets;
    
 
@@ -129,6 +129,7 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     
     public function getRoles(): array
     {
+        
         // Convertir la chaîne de rôles en tableau si nécessaire
         return $this->roles ? explode(',', $this->roles) : [];
     }
@@ -139,6 +140,16 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
 
         return $this;
     }
+
+    public function changeRoles(): self
+{
+    
+    $currentRoles = $this->getRoles();
+    $newRoles = ($currentRoles === ['ROLE_USER']) ? ['ROLE_ADMIN'] : ['ROLE_USER'];
+    $this->setRoles(implode(',', $newRoles));
+
+    return $this;
+}
     public function getSymfonyRoles(): array
     {
         // Convertir la chaîne de rôles en tableau si nécessaire

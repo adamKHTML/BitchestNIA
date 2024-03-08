@@ -52,7 +52,13 @@ class RegistrationController extends AbstractController
             $entityManager->persist($wallet); 
             $entityManager->flush();
 
-            // generate a signed url and email it to the user
+
+           
+ 
+
+           
+ 
+            // generate a signed url anuser
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
                     ->from(new Address('Argentikk@gmail.com', 'Argentik'))
@@ -98,6 +104,8 @@ class RegistrationController extends AbstractController
 
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
+
+        
 
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
