@@ -36,14 +36,14 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
+            
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
                     $form->get('plainPassword')->getData()
                 )
             );
-   // Create a new wallet for the user and credit it with 500 euros
+   // Creation d'un portefeuille initialisé à 500.00 euros
    $wallet = new Wallet();
    $wallet->setSoldeEuro(500.00); 
    $wallet->setUser($user); 
@@ -52,7 +52,13 @@ class RegistrationController extends AbstractController
             $entityManager->persist($wallet); 
             $entityManager->flush();
 
-            // generate a signed url and email it to the user
+
+           
+ 
+
+           
+ 
+            // Gestion email
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
                     ->from(new Address('Argentikk@gmail.com', 'Argentik'))
@@ -60,7 +66,7 @@ class RegistrationController extends AbstractController
                     ->subject('Please Confirm your Email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
-            // do anything else you need here, like send an email
+            
             $this->addFlash('success', 'Now check your email(spams) to confirm that you are registered, so you can login to use Bitchest freely 😎.');
             return $this->redirectToRoute('app_home');
         }
@@ -75,7 +81,7 @@ class RegistrationController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        // validate email confirmation link, sets User::isVerified=true and persists
+        // validation lien email , sets User::isVerified=true and persists
         try {
             $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
         } catch (VerifyEmailExceptionInterface $exception) {
@@ -84,7 +90,7 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('app_register');
         }
 
-        // @TODO Change the redirect on success and handle or remove the flash message in your templates
+       
        
         return $this->redirectToRoute('app_client_dashboard');
     }
@@ -93,11 +99,13 @@ class RegistrationController extends AbstractController
     {
 
 
-        // get the login error if there is one
+       
         $error = $authenticationUtils->getLastAuthenticationError();
 
-        // last username entered by the user
+       
         $lastUsername = $authenticationUtils->getLastUsername();
+
+        
 
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,

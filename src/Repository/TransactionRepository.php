@@ -34,8 +34,8 @@ class TransactionRepository extends ServiceEntityRepository
     public function findAllTransactionsForCrypto(User $user, Crypto $crypto): array
     {
         return $this->createQueryBuilder('t')
-        ->join('t.wallet', 'w') // Assurez-vous que le nom de la relation est correct
-        ->andWhere('w.user = :user') // Utilisez la relation depuis Wallet vers User
+        ->join('t.wallet', 'w') 
+        ->andWhere('w.user = :user') 
         ->andWhere('t.crypto = :cryptoId')
         ->setParameter('user', $user)
         ->setParameter('cryptoId', $crypto->getId())

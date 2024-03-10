@@ -9,3 +9,7 @@ app_login:
 
 app_logout:
     path: /logout
+    
+app_admin_dashboard:
+    path: '/admin/dashboard'
+    controller: App\Controller\AdminDashboardController::index

@@ -21,18 +21,18 @@ class PayController extends AbstractController
 
         $cryptos = $cryptoRepository->findAll();
 
-        // Gérer le formulaire d'achat
+        // Gère le formulaire d'achat
         if ($request->isMethod('POST')) {
             $cryptoId = $request->request->get('crypto');
             $amount = $request->request->get('amount');
 
-            // Récupérer la crypto sélectionnée
+            // Récupére la crypto sélectionnée
             $crypto = $cryptoRepository->find($cryptoId);
 
-            // Récupérer l'utilisateur actuel
+            // Récupére l'utilisateur actuel
             $user = $this->getUser();
 
-            // Récupérer le seul wallet de l'utilisateur (à ajuster selon la logique)
+            // Récupére le seul wallet de l'utilisateur 
             $wallet = $user->getWallets()->first();
 
             // Créer une transaction
@@ -44,18 +44,18 @@ class PayController extends AbstractController
             $transaction->setType('buy'); // Vous pouvez ajuster selon vos besoins
             $entityManager->persist($transaction);
 
-            // Mettre à jour le solde du portefeuille
+            // Met à jour le solde du portefeuille
             $wallet->setSoldeEuro($wallet->getSoldeEuro() - ($crypto->getPrice() * $amount));
             $wallet->setSoldeCryptos($wallet->getSoldeCryptos() + $amount);
             $entityManager->persist($wallet);
 
-            // Ajouter une entrée dans la table crypto_wallet
+            // Ajout d'une entrée dans la table crypto_wallet
             $wallet->addCrypto($crypto);
             $entityManager->persist($wallet);
 
             $entityManager->flush();
 
-            // Redirigez l'utilisateur vers la page de wallet ou affichez un message de confirmation
+            // Redirige l'utilisateur vers la page de wallet ou affichez un message de confirmation
             return $this->redirectToRoute('app_wallet');
         }
 

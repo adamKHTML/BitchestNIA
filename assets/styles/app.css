@@ -12,11 +12,11 @@ body , h1, h2, h3, h4, h5, h6, p, ul, ol {
 }
 
 #bg-video {
-    position: fixed; /* Position fixe pour rester en arrière-plan lors du défilement */
+    position: fixed; 
     top: 0;
     left: 0;
-    width: 100vw; /* Prend toute la largeur de la vue */
-    height: 90vh; /* Prend la moitié de la hauteur de la vue */
+    width: 100vw;  
+    height: 90vh; 
     object-fit: cover;
     z-index: -1;
 }
@@ -149,7 +149,7 @@ header, .container {
 }
 
 .glassmorphism-form .alert {
-    color: #FF5964; /* Adjust the color as needed */
+    color: #FF5964; 
     margin-top: 20px;
 }
 
@@ -175,6 +175,72 @@ header, .container {
        
        
         border-radius: 0.25rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombre légère */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
 
+}
+
+.table-rounded {
+    
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid white; 
+}
+
+.table-rounded th {
+    padding: 10px; 
+    text-align: left;
+    border-bottom: 1px solid #555; 
+}
+
+.table-rounded td {
+   
+    overflow: hidden;
+    border: 1px  white;
+}
+
+.delete-button {
+  background-color: #FF5964;
+  color: white;
+}
+
+.edit-button {
+    background-color:#35A7FF;
+    color: white;
+  }
+
+  .status-button {
+    background-color:  #01FF19;
+    color: white;
+  }
+
+  .roles-button {
+    background-color:  #38618C;
+    color: white;
+  }
+
+  .delete-button:hover {
+    transform: scale(1.1); 
+    background-color: #ff313f;
+}
+
+.edit-button:hover {
+    transform: scale(1.1); 
+    background-color:#0065b1;
+}
+.status-button:hover {
+    background-color:  #03720e;
+    color: white;
+  }
+.roles-button:hover {
+    transform: scale(1.1); 
+    background-color:  #85b4e7;
+}
+.chart-container {
+    height: 500px;
+    width: 500px; 
+    overflow: auto; 
+}
+
+.flex-col {
+    margin-bottom: auto;
 }
