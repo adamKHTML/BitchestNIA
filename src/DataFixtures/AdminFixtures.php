@@ -24,7 +24,7 @@ class AdminFixtures extends Fixture
             [
                 'pseudo' => 'TheHelperX',
                 'email' => 'buraciurii@gmail.com',
-                'password' => '24e3494df70d017727e102a86407594a1c799d3fce507c254970e2bc4281478b',
+                'password' => '$2y$10$i/e5k2X40U9FOkAS5l4ZhuGExEpBeHmQoA1r7pzrJvh6ssUjVQD1O',
                 'firstName' => 'Iuri',
                 'lastName' => 'Buriac',
                 'status' => 'active',
@@ -34,7 +34,7 @@ class AdminFixtures extends Fixture
             [
                 'pseudo' => 'nelson_nh',
                 'email' => 'ayathayler@yahoo.com',
-                'password' => 'fb3d661139dca2b8f4500998d9c248a30233d529d9a0f0155c1db00dd9883532',
+                'password' => '$2y$10$jmQfzrcCJcA4aEotW7kC2OkgS9Tavrh0S4mDmsxOpU0xtxJP1x9Xe',
                 'firstName' => 'Nelson',
                 'lastName' => 'Ayadokoun',
                 'status' => 'active',
@@ -44,7 +44,7 @@ class AdminFixtures extends Fixture
             [
                 'pseudo' => 'AdminUser',
                 'email' => 'Random@gmail.com',
-                'password' => 'b603f8fc2ea8173a282c83be7071982b8b4bc2afde32c3d4f2e92cd2fb24b778',
+                'password' => '$2y$10$gyVGI3uuSJHrBWbsZKm0H.0uzif46w87FOWYmq7zduqZy4Wp14bo.',
                 'firstName' => 'Mr',
                 'lastName' => 'X',
                 'status' => 'active',
