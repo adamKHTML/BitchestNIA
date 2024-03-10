@@ -12,11 +12,11 @@ body , h1, h2, h3, h4, h5, h6, p, ul, ol {
 }
 
 #bg-video {
-    position: fixed; /* Position fixe pour rester en arrière-plan lors du défilement */
+    position: fixed; 
     top: 0;
     left: 0;
-    width: 100vw; /* Prend toute la largeur de la vue */
-    height: 90vh; /* Prend la moitié de la hauteur de la vue */
+    width: 100vw;  
+    height: 90vh; 
     object-fit: cover;
     z-index: -1;
 }
@@ -149,7 +149,7 @@ header, .container {
 }
 
 .glassmorphism-form .alert {
-    color: #FF5964; /* Adjust the color as needed */
+    color: #FF5964; 
     margin-top: 20px;
 }
 
@@ -175,7 +175,7 @@ header, .container {
        
        
         border-radius: 0.25rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombre légère */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
 
 }
 

@@ -130,7 +130,7 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     public function getRoles(): array
     {
         
-        // Convertir la chaîne de rôles en tableau si nécessaire
+      
         return $this->roles ? explode(',', $this->roles) : [];
     }
 
@@ -152,13 +152,13 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
 }
     public function getSymfonyRoles(): array
     {
-        // Convertir la chaîne de rôles en tableau si nécessaire
+       
         return $this->roles ? explode(',', $this->roles) : [];
     }
     
     public function getCustomRoles(): string
     {
-        // Retourner la chaîne de rôles telle quelle
+      
         return $this->roles ?: '';
     }
     public function isVerified(): bool
@@ -201,7 +201,7 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     public function removeWallet(Wallet $wallet): self
     {
         if ($this->wallets->removeElement($wallet)) {
-            // set the owning side to null (unless already changed)
+           
             if ($wallet->getUser() === $this) {
                 $wallet->setUser(null);
             }
@@ -212,9 +212,9 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
 
     public function __construct()
     {
-        // Initialisez les propriétés avec les valeurs par défaut
-        $this->setStatus('active'); // par exemple, 'active' pour non-banni
-        $this->setRoles('ROLE_USER'); // par exemple, 'ROLE_USER' pour client par défaut
+        
+        $this->setStatus('active'); 
+        $this->setRoles('ROLE_USER');
         $this->wallets = new ArrayCollection();
     }
 }

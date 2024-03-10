@@ -13,20 +13,20 @@ class LoginController extends AbstractController
     #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils, RouterInterface $router): Response
     {
-        // Get the login error if there is one
+       
         $error = $authenticationUtils->getLastAuthenticationError();
 
-        // Handle specific error for "banned" status
+        // Gestion d'erreur si le compte est banni
         if ($this->isBannedError($error)) {
             $error = 'Sorry, your account has been banned.';
         }
 
-        // Last username entered by the user
+        
         $lastUsername = $authenticationUtils->getLastUsername();
          
        
 
-        // If the user is already logged in, redirect based on their role
+      
         if ($this->getUser()) {
             $roles = array_map('strtoupper', $this->getUser()->getRoles());
 

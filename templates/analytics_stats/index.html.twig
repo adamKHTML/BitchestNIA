@@ -42,7 +42,7 @@
                     <h1 class="text-2xl font-bold mb-4">Total number of Users: {{ totalUsers }} Crypto-Member 🤵‍♂️</h1>
                   
                     <h1 class="text-2xl font-bold mb-4">Most purchased crypto</h1>
-                    <!-- Ajoutez un conteneur pour le graphique -->
+                    <!-- graphique -->
                    <div class="chart-container">
                     <canvas id="cryptoChart"></canvas>
                 </div>
@@ -53,11 +53,11 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Obtenez les données pour le graphique à partir de votre contrôleur
+          
             const cryptoData = {{ cryptoData|json_encode|raw }};
             const ctx = document.getElementById('cryptoChart').getContext('2d');
 
-            // Créez le graphique à secteurs
+            // Création du graphique à secteurs
             const myPieChart = new Chart(ctx, {
                 type: 'pie',
                 data: {

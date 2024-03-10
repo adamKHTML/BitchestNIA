@@ -40,7 +40,7 @@ class Crypto
     {
         $this->wallet = new ArrayCollection();
 
-        // Génération aléatoire des valeurs lors de la création de la crypto-monnaie
+       
         if (empty($this->price) || empty($this->priceBTC) || empty($this->actual_value)) {
             $this->generateRandomValues();
         }
@@ -132,19 +132,19 @@ class Crypto
 
     private function generateRandomPrice(): string
     {
-        // Générez une valeur aléatoire pour le prix
+       
         return number_format(mt_rand(500, 5000) / 100, 2);
     }
 
     private function generateRandomPriceBTC(): string
     {
-        // Générez une valeur aléatoire pour le prix en BTC
+      
         return number_format(mt_rand(1, 10) / 100, 2);
     }
 
     private function generateRandomActualValue(): string
     {
-        // Générez une valeur aléatoire pour la valeur actuelle
+       
         return number_format(mt_rand(50, 200) / 100, 2);
     }
 

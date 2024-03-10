@@ -1,6 +1,6 @@
 <?php
 
-// src/Controller/AnalyticsStatsController.php
+
 
 namespace App\Controller;
 
@@ -27,11 +27,11 @@ class AnalyticsStatsController extends AbstractController
     {
         $totalUsers = $this->getTotalUsers();
 
-        // Vous pouvez ajouter d'autres logiques pour obtenir d'autres statistiques
+       
 
         return $this->render('analytics_stats/index.html.twig', [
             'totalUsers' => $totalUsers,
-            // Ajoutez d'autres données nécessaires pour vos statistiques
+            
         ]);
     }
 

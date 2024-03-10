@@ -52,15 +52,15 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         $userRepository = $this->entityManager->getRepository(User::class);
         $user = $userRepository->findOneBy(['email' => $email]);
         
-        // Vérifier si l'utilisateur est trouvé et s'il est banni
+        // Vérifie si l'utilisateur est trouvé et s'il est banni
         if ($user && method_exists($user, 'getStatus') && $user->getStatus() === 'banned') {
-            // Créer une instance d'AuthenticationException avec le message d'erreur
+           
             $exception = new AuthenticationException('You are banned.');
         
-            // Stocker l'exception dans la session pour que getLastAuthenticationError la récupère
+          
             $request->getSession()->set(SecurityRequestAttributes::AUTHENTICATION_ERROR, $exception);
         
-            // Rediriger l'utilisateur vers la page de connexion
+            // Redirection l'utilisateur vers la page de connexion
             return new Passport(
                 new UserBadge($email),
                 new PasswordCredentials(''), 
@@ -71,16 +71,16 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
             );
         }
         
-        // Vérifier si le champ du mot de passe est vide
+        // Vérifie si le champ du mot de passe est vide
         $password = $request->request->get('password', '');
         if (empty($password)) {
-            // Créer une instance d'AuthenticationException avec le message d'erreur
+           
             $exception = new AuthenticationException('Invalid credentials.');
         
-            // Stocker l'exception dans la session pour que getLastAuthenticationError la récupère
+           
             $request->getSession()->set(SecurityRequestAttributes::AUTHENTICATION_ERROR, $exception);
         
-            // Rediriger l'utilisateur vers la page de connexion
+            // Redirection l'utilisateur vers la page de connexion
             return new Passport(
                 new UserBadge($email),
                 new PasswordCredentials(''), 
@@ -91,7 +91,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
             );
         }
         
-        // Si l'utilisateur n'est pas banni et que le champ du mot de passe n'est pas vide, procédez normalement à l'authentification
+        // Si l'utilisateur n'est pas banni et que le champ du mot de passe n'est pas vide, chemin vers à l'authentification
         return new Passport(
             new UserBadge($email),
             new PasswordCredentials($password),
@@ -105,13 +105,13 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        // Récupérer l'utilisateur authentifié
+        // Récupère l'utilisateur authentifié
         $user = $token->getUser();
 
         if (method_exists($user, 'getRoles')) {
             $roles = $user->getRoles();
 
-            // Vérifiez si les rôles sont disponibles et redirigez en conséquence
+            // Vérifie si les rôles sont disponibles et redirection en conséquence
             if ($roles && is_array($roles)) {
                 if (in_array('ROLE_ADMIN', $roles, true)) {
                     return new RedirectResponse($this->urlGenerator->generate('app_admin_dashboard'));
@@ -121,7 +121,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
             }
         }
 
-        // Si aucun rôle ni target path n'est disponible, rediriger vers la page d'accueil par défaut
+        // Si aucun rôle ni target path n'est disponible, redirection vers la page d'accueil par défaut
         return new RedirectResponse($this->urlGenerator->generate('app_home'));
     }
 

@@ -36,17 +36,17 @@ class UserManagementController extends AbstractController
         try {
             $this->entityManager->beginTransaction();
 
-            // Générer un texte des transactions avant de les supprimer
+            // Génère un texte des transactions avant de les supprimer
             $transactionText = $this->generateTransactionText($user);
 
             
           
 
-            // Enregistrez le texte des transactions liées à ce portefeuille
-            // (vous pouvez le stocker, le journaliser, etc.)
+            // Enregistre le texte des transactions liées à ce portefeuille
+            
             $this->saveTransactionText($transactionText);
 
-            // Logique
+            
             $transactions = $this->entityManager->getRepository(Transaction::class)
                 ->createQueryBuilder('t')
                 ->join('t.wallet', 'w')
@@ -56,18 +56,18 @@ class UserManagementController extends AbstractController
                 ->getResult();
 
             foreach ($transactions as $transaction) {
-                // Supprimer la transaction via l'EntityManager
+                // Supprime la transaction via l'EntityManager
                 $this->entityManager->remove($transaction);
 
-                // Supprimer le portefeuille associé à la transaction
+                // Supprime le portefeuille associé à la transaction
                 $wallet = $transaction->getWallet();
                 $this->entityManager->remove($wallet);
             }
 
-            // Supprimer l'utilisateur après avoir traité les transactions et les portefeuilles
+            // Supprime l'utilisateur après avoir traité les transactions et les portefeuilles
             $this->entityManager->remove($user);
 
-            // ...
+           
 
             $this->entityManager->flush();
             $this->entityManager->commit();
@@ -86,7 +86,7 @@ class UserManagementController extends AbstractController
     #[Route('/admin/user/{id}/change-status', name: 'app_user_change_status')]
     public function changeUserStatus(User $user): Response
     {
-        // Logique pour changer le statut de l'utilisateur (basculer entre 'actif' et 'banni', par exemple)
+        // Logique pour changer le statut de l'utilisateur (bascule entre 'actif' et 'banni')
         $newStatus = ($user->getStatus() === 'active') ? 'banned' : 'active';
         $user->setStatus($newStatus);
         $this->entityManager->flush();
@@ -99,8 +99,8 @@ class UserManagementController extends AbstractController
     #[Route('/admin/user/{id}/change-roles', name: 'app_user_change_roles')]
     public function changeUserRoles(User $user): Response
     {
-        // Logique pour changer les rôles de l'utilisateur (basculer entre 'ROLE_USER' et 'ROLE_ADMIN', par exemple)
-        $user->changeRoles(); // Supposez que vous ayez une méthode comme celle-ci dans votre entité User
+        // Logique pour changer les rôles de l'utilisateur (bascule entre 'ROLE_USER' et 'ROLE_ADMIN')
+        $user->changeRoles(); 
         $this->entityManager->flush();
 
         $this->addFlash('success', 'Rôles de l\'utilisateur modifiés avec succès.');
@@ -122,7 +122,7 @@ class UserManagementController extends AbstractController
         ->getResult();
 
     foreach ($transactions as $transaction) {
-        // Utilisez $transaction->getDate(), $transaction->getPrice(), etc. pour accéder aux valeurs
+       
         $transactionText .= $this->formatTransactionTextForTransaction($transaction);
     }
 
@@ -131,7 +131,7 @@ class UserManagementController extends AbstractController
 
 private function formatTransactionTextForTransaction(Transaction $transaction): string
 {
-    // Utilisez les méthodes getters de l'entité Transaction pour obtenir les valeurs nécessaires
+    
     $date = $transaction->getDate()->format('Y-m-d H:i:s');
     $type = $transaction->getType();
     $quantity = $transaction->getQuantity();

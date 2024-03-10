@@ -28,11 +28,11 @@ class ClientDashboardController extends AbstractController
         // Génération des données pour le graphique
         $cryptoDataSets = [];
         foreach ($cryptos as $crypto) {
-            // Générer les données pour les 6 premiers jours
+            // Génére les données pour les 6 premiers jours
             $randomData = $this->generateRandomData(6);
 
-            // Ajouter le prix réel de la crypto pour le 7ème jour
-            $realPrice = $crypto->getPrice(); // Récupérer le prix réel depuis la base de données
+            // Ajout du prix réel de la crypto pour le 7ème jour
+            $realPrice = $crypto->getPrice(); // Récupére le prix réel depuis la base de données
 
             $cryptoDataSets[$crypto->getName()] = [
                 'labels' => ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
@@ -52,8 +52,8 @@ class ClientDashboardController extends AbstractController
     {
         $randomData = [];
         for ($i = 0; $i < $days; $i++) {
-            // Générez des données aléatoires pour les 6 premiers jours
-            $randomData[] = mt_rand(10, 50); // Modifiez cette logique selon vos besoins
+            // Génére des données aléatoires pour les 6 premiers jours
+            $randomData[] = mt_rand(10, 50); 
         }
 
         return $randomData;

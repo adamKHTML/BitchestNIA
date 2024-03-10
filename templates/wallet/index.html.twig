@@ -42,7 +42,7 @@
                 <!-- Contenu du portefeuille -->
                 <h1 class="text-2xl font-bold mb-4">Your Wallets</h1>
                 
-                <!-- Afficher la liste des portefeuilles de l'utilisateur -->
+               
                 {% for wallet in wallets %}
                     <div class="wallet p-4 mb-4 rounded shadow">
                         <h2 class="text-xl font-bold">Compte de {{ app.user.lastName }} {{ app.user.firstName }}</h2>
@@ -51,7 +51,7 @@
                       
                     </div>
                 {% endfor %}
- <!-- Formulaire pour changer le nom du portefeuille -->
+ <!-- Formulaire pour changer le nom du portefeuille (pas encore prêt) -->
  <h1 class="text-2xl font-bold mb-4">Sorry but you can't add a new wallet for now , this option will be available soon 🤞🥸</h1>
  <div class="mt-8">
     <form action="{{ path('app_wallet') }}" method="post" class="glassmorphism-form">

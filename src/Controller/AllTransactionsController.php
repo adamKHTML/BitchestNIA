@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Entity\Transaction; // Ajout de l'import
+use App\Entity\Transaction; 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,7 +29,7 @@ class AllTransactionsController extends AbstractController
             $transactions = [];
             
             foreach ($wallets as $wallet) {
-                // Utilisez la relation définie dans l'entité Transaction
+                
                 $walletTransactions = $this->entityManager->getRepository(Transaction::class)
                     ->findBy(['wallet' => $wallet]);
                 

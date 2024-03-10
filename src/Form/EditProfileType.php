@@ -18,8 +18,7 @@ class EditProfileType extends AbstractType
             ->add('firstName')
             ->add('pseudo')
             ->add('email')
-            // Vous pouvez exclure le champ de mot de passe
-            // ->add('password')
+           
             ->add('save', SubmitType::class, [
                 'label' => 'Save Changes',
             ]);
