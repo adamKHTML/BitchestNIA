@@ -49,34 +49,20 @@
                 <p>Pseudo: {{ app.user.pseudo }}</p>
                 <p>Email: {{ app.user.email }}</p>
 
-                <button onclick="toggleEdit()">Edit</button>
+                <a href="{{ path('app_profile', {'edit': true}) }}">Edit</a>
             {% else %}
-            {# Afficher le formulaire d'édition en mode édition #}
-            <div id="profile-edit-form-container" class="form-container" >
-                {{ form_start(form) }}
-                {{ form_widget(form) }}
-                <input type="hidden" name="is_edit_mode" value="{{ is_edit_mode ? 'true' : 'false' }}">
-                <button type="submit">Save</button>
-                {{ form_end(form) }}
-                <button >Cancel</button>
-            </div>
+                {# Afficher le formulaire d'édition en mode édition #}
+                <body style="height: max-content;" >
+                <div class="glassmorphism-form mt-4">
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    <button type="submit">Save</button>
+                    <a href="{{ path('app_profile') }}">Cancel</a>
+                    {{ form_end(form) }}
+                </body>
+                </div>
             {% endif %}
         </div>
     </div>
 </div>
-{% endblock %}
-
-{% block javascripts %}
-<script>
-    function toggleEdit() {
-        var x = document.getElementById("profile-edit-form-container");
-        if (x.style.display === "none") {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none";
-  }
-
-        
-    }
-</script>
 {% endblock %}
