@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin Profile Dashboard{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('build/tailwind.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/dashboard.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .chart-container {
+            display: inline-block;
+            width: 48%;
+            margin: 5px;
+        }
+       
+    </style>
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    {% include 'header.html.twig' %}
+
+    <div class="container-fluid h-full gradient-bg">
+        <div class="flex h-full">
+            <div class="w-48 bg-gray-800 text-white" >
+                <!-- Sidebar -->
+                <ul class="flex flex-col p-4"  >
+                    <li>
+                        <a href="/admin/dashboard" class="text-white">Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="/admin/profile" class="text-white">Profile</a>
+                    </li>
+                    <li>
+                        <a href="/admin/user-management" class="text-white">User Management</a>
+                    </li>
+                    <li>
+                        <a href="/crypto/management" class="text-white">Cryptocurrency Management</a>
+                    </li>
+                    <li>
+                        <a href="/admin/all_transactions" class="text-white">Transactions</a>
+                    </li>
+                    <li>
+                        <a href="/admin/analytics-stats" class="text-white">Reports and Analytics</a>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="flex-1 p-4" style="margin-left: 48px;">
+        <div class="container">
+            <h1>Your Profile</h1>
+
+            {% if not is_edit_mode %}
+                {# Afficher les informations du profil en mode affichage #}
+                <p>First Name: {{ app.user.firstName }}</p>
+                <p>Last Name: {{ app.user.lastName }}</p>
+                <p>Pseudo: {{ app.user.pseudo }}</p>
+                <p>Email: {{ app.user.email }}</p>
+
+                <a href="{{ path('app_admin_profile', {'edit': true}) }}">Edit</a>
+            {% else %}
+                {# Afficher le formulaire d'édition en mode édition #}
+                <body style="height: max-content;" >
+                <div class="glassmorphism-form mt-4">
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    <a href="{{ path('app_admin_profile') }}">Cancel</a>
+                    {{ form_end(form) }}
+                </body>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
